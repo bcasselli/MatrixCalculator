@@ -60,6 +60,94 @@ final public class Matrix {
                 A.data[j][i] = this.data[i][j];
         return A;
     }
+    
+    public Matrix plus(Matrix B)
+    {
+        Matrix A = this;
+        if(B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix!");
+        Matrix C = new Matrix(M, N);
+        for(int i = 0; i < M; i++)
+            for(int j = 0; j < N; j++)
+                C.data[i][j] = A.data[i][j] + B.data[i][j];
+        return C;
+    }
+    
+    public Matrix minus(Matrix B)
+    {
+        Matrix A = this;
+        if(B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix!");
+        Matrix C = new Matrix(M, N);
+        for(int i = 0; i < M; i++)
+            for(int j = 0; j < N; j++)
+                C.data[i][j] = A.data[i][j] - B.data[i][j];
+        return C;
+    }
+    
+    public boolean eq(Matrix B)
+    {
+        Matrix A = this;
+        if (B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix!");
+        for(int i = 0; i < M; i++)
+            for(Int j = 0; j < N; j++)
+                if(A.data[i][j] != B.data[i][j]) return false;
+        return true;
+    }
+    
+    public Matrix times(Matrix B)
+    {
+        Matrix A = this;
+        if (A.N != B.M) throw new RuntimeException("Illegal matrix!");
+        Matrix C = new Matrix(A.M, B.N);
+        for(int i = 0; i < C.M; i++)
+            for(int j = 0; j < C.N; j++)
+                for(int k = 0; k < A.N; k++)
+                    C.data[i][j] += (A.data[i][k] * B.data[k][j]);
+        return C;
+    }
+    
+    public Matrix solve(Matrix rhs)
+    {
+        if(M != N || rhs.M != N || rhs.N != 1)
+            throw new RuntimeException("Illegal matrix!");
+        Matrix A = new Matrix(this);
+        Matrix b = new Matrix(rhs);
+        for(int i = 0; i < N; i++)
+            int max = i;
+            for(int j = i + 1; j < N; j++)
+                if(Math.abs(A.data[j][i]) > Math.abs(A.data[max][i]))
+                           max = j;
+                  A.swap(i, max);
+                  B.swap(i, max);
+            if(A.data[i][i] == 0.0) throw new RuntimeException("Matrix is a single number");
+            for(int j = i + 1; j < N; j++)
+                b.data[j][0] -= b.data[i][0] * A.data[j][i] / A.data[i][i];
+            for(int j = i + 1; j < N; j++)
+                double m = A.data[j][i] / A.data[i][i];
+                for(int k = i + 1; k < N; k++)
+                    A.data[j][k] -= A.data[i][k] * m;
+        }
+            As.data[j][i] = 0.0;
+    }
+}
+
+    Matrix x = new Matrix(N, 1)
+    for(int j = N - 1; j >= 0; j--)
+        double t = 0.0;
+        for(int k = j + 1; k < N; k++)
+              t += A.data[j][k] * x.data[k][0];
+         x.data[j][0] = (b.data[j][0] - t) / A.data[j][j];
+    }
+    return x;
+}
+
+public void show()
+{
+    for (int i = 0; i < M; i++)
+        for (int j = 0; j < N; j++)
+                Std.printf("&9.4 ", data[i][j]);
+            StdOut.println();
+}
+}
 
     
 
