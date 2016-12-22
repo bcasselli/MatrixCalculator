@@ -45,7 +45,7 @@ final public class Matrix {
         return I;
     }
 
-    private void swap(int i, int j)
+    public void swap(int i, int j)
     {
         double[] temp = data[i];
         data[i] = data[j];
@@ -88,7 +88,7 @@ final public class Matrix {
         Matrix A = this;
         if (B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix!");
         for(int i = 0; i < M; i++)
-            for(Int j = 0; j < N; j++)
+            for(int j = 0; j < N; j++)
                 if(A.data[i][j] != B.data[i][j]) return false;
         return true;
     }
@@ -111,13 +111,14 @@ final public class Matrix {
             throw new RuntimeException("Illegal matrix!");
         Matrix A = new Matrix(this);
         Matrix b = new Matrix(rhs);
+
         for(int i = 0; i < N; i++)
-            int max = i;
             for(int j = i + 1; j < N; j++)
+
                 if(Math.abs(A.data[j][i]) > Math.abs(A.data[max][i]))
                            max = j;
                   A.swap(i, max);
-                  B.swap(i, max);
+                  b.swap(i, max);
             if(A.data[i][i] == 0.0) throw new RuntimeException("Matrix is a single number");
             for(int j = i + 1; j < N; j++)
                 b.data[j][0] -= b.data[i][0] * A.data[j][i] / A.data[i][i];
@@ -125,10 +126,10 @@ final public class Matrix {
                 double m = A.data[j][i] / A.data[i][i];
                 for(int k = i + 1; k < N; k++)
                     A.data[j][k] -= A.data[i][k] * m;
-        }
-            As.data[j][i] = 0.0;
-    }
-}
+
+            A.data[j][i] = 0.0;
+
+
 
     Matrix x = new Matrix(N, 1)
     for(int j = N - 1; j >= 0; j--)
@@ -136,7 +137,7 @@ final public class Matrix {
         for(int k = j + 1; k < N; k++)
               t += A.data[j][k] * x.data[k][0];
          x.data[j][0] = (b.data[j][0] - t) / A.data[j][j];
-    }
+
     return x;
 }
 
@@ -144,12 +145,12 @@ public void show()
 {
     for (int i = 0; i < M; i++)
         for (int j = 0; j < N; j++)
-                Std.printf("&9.4 ", data[i][j]);
-            StdOut.println();
+                System.out.printf("&9.4 ", data[i][j]);
+            System.out.println();
 }
 }
 
-    
+
 
 
 }
